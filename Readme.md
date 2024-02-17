@@ -9,7 +9,7 @@ I created this project to implement all the features that I know of in the Minim
 4. CORS
 5. Named injection of HTTP client
 6. Global Exception handling
-7. Endpoint decoration
+7. Endpoint decoration (Summary & description of endpoints displayed besides endpoint route)
 
 
 ### Yet to implement
