@@ -1,7 +1,3 @@
-// 1. Partial Class example.
-// 2. Abstract Method example.
-// 3. Example to override a method.
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
