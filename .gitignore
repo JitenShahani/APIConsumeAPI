@@ -412,6 +412,9 @@ FodyWeavers.xsd
 .history
 .ionide
 
+# Git Command File
+USefulGitCommands.md
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,csharp
 SquareX Safe File Viewer
 ✕
