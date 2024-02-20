@@ -7,8 +7,8 @@ public class ConsumeUniversityEndpoints
 
 public ConsumeUniversityEndpoints(IHttpClientFactory httpClientFactory, ILoggerFactory loggerFactory)
 {
-	_client = httpClientFactory.CreateClient("universities") ?? throw new ArgumentNullException(nameof(httpClientFactory));
-	_logger = loggerFactory.CreateLogger<UniversityResponse>() ?? throw new ArgumentNullException(nameof(loggerFactory));
+	_client = httpClientFactory.CreateClient("universities");
+	_logger = loggerFactory.CreateLogger<UniversityResponse>();
 }
 
 	public void ConfigureUniversityEndpoints(IEndpointRouteBuilder endpoint)

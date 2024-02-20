@@ -7,8 +7,8 @@ public class ConsumeJokeEndpoints
 
 	public ConsumeJokeEndpoints(IHttpClientFactory httpClientFactory, ILoggerFactory loggerFactory)
 	{
-		_client = httpClientFactory.CreateClient("jokes") ?? throw new ArgumentNullException(nameof(httpClientFactory));
-		_logger = loggerFactory.CreateLogger<JokeResponse>() ?? throw new ArgumentNullException(nameof(loggerFactory));
+		_client = httpClientFactory.CreateClient("jokes");
+		_logger = loggerFactory.CreateLogger<JokeResponse>();
 	}
 
 	public void ConfigureJokeEndpoints(IEndpointRouteBuilder endpoint)
