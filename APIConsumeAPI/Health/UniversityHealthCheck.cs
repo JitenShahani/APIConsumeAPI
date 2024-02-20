@@ -7,7 +7,7 @@ public class UniversityHealthCheck : IHealthCheck
 
 	public UniversityHealthCheck(IHttpClientFactory httpClientFactory)
 	{
-		_client = httpClientFactory.CreateClient("universities") ?? throw new ArgumentNullException(nameof(httpClientFactory));
+		_client = httpClientFactory.CreateClient("universities");
 		_endpoint = "search?country=Bhutan";
 	}
 

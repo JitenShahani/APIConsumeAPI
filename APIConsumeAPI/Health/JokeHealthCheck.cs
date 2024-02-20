@@ -7,7 +7,7 @@ public class JokeHealthCheck : IHealthCheck
 
 	public JokeHealthCheck(IHttpClientFactory httpClientFactory)
 	{
-		_client = httpClientFactory.CreateClient("jokes") ?? throw new ArgumentNullException(nameof(httpClientFactory));
+		_client = httpClientFactory.CreateClient("jokes");
 		_endpoint = "random_joke";
 	}
 
