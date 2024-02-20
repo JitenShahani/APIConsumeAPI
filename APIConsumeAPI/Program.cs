@@ -127,7 +127,10 @@ app.MapHealthChecksUI();
 app.UseRateLimiter();
 
 // create instance of IHttpClientFactory
-var _httpClientFactory = app.Services.GetRequiredService<IHttpClientFactory>();
+IHttpClientFactory _httpClientFactory = app.Services.GetRequiredService<IHttpClientFactory>();
+
+// Create instance of IConfiguration
+IConfiguration _configuration = app.Services.GetRequiredService<IConfiguration>();
 
 // create instance of Logger
 ILoggerFactory _loggerFactory = LoggerFactory.Create(builder =>
@@ -135,9 +138,6 @@ ILoggerFactory _loggerFactory = LoggerFactory.Create(builder =>
 	builder.AddConsole();
 	builder.AddDebug();
 });
-
-// Create instance of IConfiguration
-IConfiguration _configuration = app.Services.GetRequiredService<IConfiguration>();
 
 // Register my basic endpoints
 new BasicEndpoints().ConfigureBasicEndpoints(app);
