@@ -77,13 +77,13 @@ builder.Services.AddRateLimiter(rateLimiterOptions =>
 // Register named HttpClient for universities related service
 builder.Services.AddHttpClient("universities", options =>
 {
-	options.BaseAddress = new Uri("http://universities.hipolabs.com/");
+	options.BaseAddress = new Uri(builder.Configuration["UniversityBaseAddress"]!);
 });
 
 // Register names HttpClient for jokes related service
 builder.Services.AddHttpClient("jokes", options =>
 {
-	options.BaseAddress = new Uri("http://official-joke-api.appspot.com/");
+	options.BaseAddress = new Uri(builder.Configuration["JokeBaseAddress"]!);
 });
 
 var app = builder.Build();
@@ -129,20 +129,24 @@ app.UseRateLimiter();
 // create instance of IHttpClientFactory
 var _httpClientFactory = app.Services.GetRequiredService<IHttpClientFactory>();
 
+// create instance of Logger
 ILoggerFactory _loggerFactory = LoggerFactory.Create(builder =>
 {
 	builder.AddConsole();
 	builder.AddDebug();
 });
 
+// Create instance of IConfiguration
+IConfiguration _configuration = app.Services.GetRequiredService<IConfiguration>();
+
 // Register my basic endpoints
 new BasicEndpoints().ConfigureBasicEndpoints(app);
 
 // Register university related endpoints
-new ConsumeUniversityEndpoints(_httpClientFactory, _loggerFactory).ConfigureUniversityEndpoints(app);
+new ConsumeUniversityEndpoints(_httpClientFactory, _loggerFactory, _configuration).ConfigureUniversityEndpoints(app);
 
 // Register jokes related endpoints
-new ConsumeJokeEndpoints(_httpClientFactory, _loggerFactory).ConfigureJokeEndpoints(app);
+new ConsumeJokeEndpoints(_httpClientFactory, _loggerFactory, _configuration).ConfigureJokeEndpoints(app);
 
 app.UseHttpsRedirection();
 

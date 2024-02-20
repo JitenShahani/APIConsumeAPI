@@ -3,11 +3,23 @@
 public class UniversityHealthCheck : IHealthCheck
 {
 	private readonly HttpClient _client;
+	private readonly IConfiguration _config;
 	private readonly string _endpoint;
 
-	public UniversityHealthCheck(IHttpClientFactory httpClientFactory)
+	public UniversityHealthCheck(IHttpClientFactory httpClientFactory, IConfiguration config)
 	{
-		_client = httpClientFactory.CreateClient("universities");
+		_config = config;
+
+		try
+		{
+			_client = httpClientFactory.CreateClient("universities");
+		}
+		catch (System.Exception)
+		{
+			_client = httpClientFactory.CreateClient();
+			_client.BaseAddress = new Uri(_config["UniversityBaseAddress"]!);
+		}
+
 		_endpoint = "search?country=Bhutan";
 	}
 

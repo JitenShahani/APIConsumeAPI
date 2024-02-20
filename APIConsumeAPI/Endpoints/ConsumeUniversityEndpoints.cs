@@ -3,13 +3,25 @@
 public class ConsumeUniversityEndpoints
 {
 	private readonly HttpClient _client;
+	private readonly IConfiguration _config;
 	private readonly ILogger _logger;
 
-public ConsumeUniversityEndpoints(IHttpClientFactory httpClientFactory, ILoggerFactory loggerFactory)
-{
-	_client = httpClientFactory.CreateClient("universities");
-	_logger = loggerFactory.CreateLogger<UniversityResponse>();
-}
+	public ConsumeUniversityEndpoints(IHttpClientFactory httpClientFactory, ILoggerFactory loggerFactory, IConfiguration config)
+	{
+		_config = config;
+
+		try
+		{
+			_client = httpClientFactory.CreateClient("universities");
+		}
+		catch (System.Exception)
+		{
+			_client = httpClientFactory.CreateClient();
+			_client.BaseAddress = new Uri(_config["UniversityBaseAddress"]!);
+		}
+
+		_logger = loggerFactory.CreateLogger<UniversityResponse>();
+	}
 
 	public void ConfigureUniversityEndpoints(IEndpointRouteBuilder endpoint)
 	{

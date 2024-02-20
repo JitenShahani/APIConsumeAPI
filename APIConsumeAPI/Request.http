@@ -1,3 +1,10 @@
-GET http://localhost:5025/healthcheck
+@host = http://localhost:5025
+
+GET {{host}}/_health
 
 ###
+
+GET {{host}}/api/v4/university?country=Oman
+
+###
+

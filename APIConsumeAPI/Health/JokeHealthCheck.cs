@@ -3,11 +3,23 @@
 public class JokeHealthCheck : IHealthCheck
 {
 	private readonly HttpClient _client;
+	private readonly IConfiguration _config;
 	private readonly string _endpoint;
 
-	public JokeHealthCheck(IHttpClientFactory httpClientFactory)
+	public JokeHealthCheck(IHttpClientFactory httpClientFactory, IConfiguration config)
 	{
-		_client = httpClientFactory.CreateClient("jokes");
+		_config = config;
+
+		try
+		{
+			_client = httpClientFactory.CreateClient("jokes");
+		}
+		catch (System.Exception)
+		{
+			_client = httpClientFactory.CreateClient();
+			_client.BaseAddress = new Uri(_config["JokeBaseAddress"]!);
+		}
+
 		_endpoint = "random_joke";
 	}
 

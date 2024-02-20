@@ -3,11 +3,23 @@
 public class ConsumeJokeEndpoints
 {
 	private readonly HttpClient _client;
+	private readonly IConfiguration _config;
 	private readonly ILogger _logger;
 
-	public ConsumeJokeEndpoints(IHttpClientFactory httpClientFactory, ILoggerFactory loggerFactory)
+	public ConsumeJokeEndpoints(IHttpClientFactory httpClientFactory, ILoggerFactory loggerFactory, IConfiguration config)
 	{
-		_client = httpClientFactory.CreateClient("jokes");
+		_config = config;
+
+		try
+		{
+			_client = httpClientFactory.CreateClient("jokes");
+		}
+		catch (System.Exception)
+		{
+			_client = httpClientFactory.CreateClient();
+			_client.BaseAddress = new Uri(_config["JokeBaseAddress"]!);
+		}
+
 		_logger = loggerFactory.CreateLogger<JokeResponse>();
 	}
 
