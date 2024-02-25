@@ -14,7 +14,7 @@ public class ConsumeJokeEndpoints
 		{
 			_client = httpClientFactory.CreateClient("jokes");
 		}
-		catch (System.Exception)
+		catch
 		{
 			_client = httpClientFactory.CreateClient();
 			_client.BaseAddress = new Uri(_config["JokeBaseAddress"]!);
@@ -25,7 +25,7 @@ public class ConsumeJokeEndpoints
 
 	public void ConfigureJokeEndpoints(IEndpointRouteBuilder endpoint)
 	{
-		var group = endpoint.MapGroup("/api")
+		var group = endpoint.MapGroup("/api/joke")
 			.WithTags("Joke Endpoint")
 			.WithGroupName("v1")
 			.RequireRateLimiting("token")
@@ -33,13 +33,13 @@ public class ConsumeJokeEndpoints
 			.WithOpenApi();
 
 		group
-			.MapGet("/v1/joke", GetJokeV1)
+			.MapGet("/v1", GetJokeV1)
 			.Produces<JokeResponse>(200)
 			.Produces(400)
 			.WithMetadata(new SwaggerOperationAttribute("Single line - Json output"));
 
 		group
-			.MapGet("/v2/joke", GetJokeV2)
+			.MapGet("/v2", GetJokeV2)
 			.Produces<JokeResponse>(200)
 			.Produces(400)
 			.WithMetadata(new SwaggerOperationAttribute("Single line - Programming Jokes - Json output"));

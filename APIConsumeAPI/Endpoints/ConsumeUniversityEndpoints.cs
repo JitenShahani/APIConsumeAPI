@@ -14,7 +14,7 @@ public class ConsumeUniversityEndpoints
 		{
 			_client = httpClientFactory.CreateClient("universities");
 		}
-		catch (System.Exception)
+		catch
 		{
 			_client = httpClientFactory.CreateClient();
 			_client.BaseAddress = new Uri(_config["UniversityBaseAddress"]!);
@@ -25,7 +25,7 @@ public class ConsumeUniversityEndpoints
 
 	public void ConfigureUniversityEndpoints(IEndpointRouteBuilder endpoint)
 	{
-		var group = endpoint.MapGroup("/api/")
+		var group = endpoint.MapGroup("/api/university")
 			.WithTags("University Endpoints")
 			.WithGroupName("v1")
 			.RequireRateLimiting("token")
@@ -33,33 +33,33 @@ public class ConsumeUniversityEndpoints
 			.WithOpenApi();
 
 		group
-			.MapGet("/v1/university", GetAsyncV1)
+			.MapGet("/v1", GetAsyncV1)
 			.Produces<UniversityResponse>(200)
 			.Produces(400)
 			.WithMetadata(new SwaggerOperationAttribute("Old fashioned - Country name hardcoded - String output"));
 
 		group
-			.MapGet("/v2/university", GetAsyncV2)
+			.MapGet("/v2", GetAsyncV2)
 			.Produces<UniversityResponse>(200)
 			.Produces(400)
 			.WithMetadata(new SwaggerOperationAttribute("Old fashioned - Country name hardcoded - Json output"));
 
 		group
-			.MapGet("/v3/university/{country}", GetAsyncV3)
+			.MapGet("/v3/{country}", GetAsyncV3)
 			.Produces<UniversityResponse>(200)
 			.Produces(400)
 			.WithMetadata(new SwaggerOperationAttribute("Old fashioned - Country parameter from route - Json output"))
 			.AddEndpointFilter<UniversityFilter>();
 
 		group
-			.MapGet("/v4/university/", GetAsyncV4)
+			.MapGet("/v4", GetAsyncV4)
 			.Produces<UniversityResponse>(200)
 			.Produces(400)
 			.WithMetadata(new SwaggerOperationAttribute("Single line - Country parameter from query - Json output"))
 			.AddEndpointFilter<UniversityFilter>();
 
 		group
-			.MapPost("/v5/university", GetAsyncV5)
+			.MapPost("/v5", GetAsyncV5)
 			.Produces<UniversityResponse>(200)
 			.Produces(400)
 			.WithMetadata(new SwaggerOperationAttribute("POST - Single line - Country parameter from body - Json output"))
