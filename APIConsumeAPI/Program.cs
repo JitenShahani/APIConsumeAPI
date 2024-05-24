@@ -45,15 +45,15 @@ builder.Services
 builder.Services.AddHealthChecksUI().AddInMemoryStorage();
 
 // Register CORS to enable cross domain access
-builder.Services.AddCors(options =>
-{
-	options.AddPolicy("blazorApp", policyBuilder =>
-	{
-		policyBuilder.WithOrigins("http://localhost:5000"); // Due to change as per UI app.
-		policyBuilder.AllowAnyHeader();
-		policyBuilder.AllowAnyMethod();
-	});
-});
+//builder.Services.AddCors(options =>
+//{
+//	options.AddPolicy("blazorApp", policyBuilder =>
+//	{
+//		policyBuilder.WithOrigins("http://localhost:5000"); // Due to change as per UI app.
+//		policyBuilder.AllowAnyHeader();
+//		policyBuilder.AllowAnyMethod();
+//	});
+//});
 
 // Enable Rate limiting
 builder.Services.AddRateLimiter(rateLimiterOptions =>
@@ -112,7 +112,7 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<GlobalExceptionHandling>();
 
 // Enable CORS in middleware
-app.UseCors("blazorApp");
+//app.UseCors("blazorApp");
 
 // Health check endpoint
 app.UseHealthChecks("/_health", new HealthCheckOptions
