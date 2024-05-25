@@ -116,15 +116,20 @@ public class ConsumeUniversityEndpoints
 
 	private async Task<Results<Ok<IEnumerable<UniversityResponse>>, BadRequest>> GetAsyncV4([FromQuery] string country)
 	{
-		var result = await _client.GetFromJsonAsync<IEnumerable<UniversityResponse>>($"search?country={country}");
+		// var result = await _client.GetFromJsonAsync<IEnumerable<UniversityResponse>>($"search?country={country}");
 
-		if (result!.Any())
-		{
-			return TypedResults.Ok(result);
-		}
+		// if (result!.Any())
+		// {
+		// 	return TypedResults.Ok(result);
+		// }
 
-		_logger.LogCritical("Unable to access Universities endpoint");
-		return TypedResults.BadRequest();
+		// _logger.LogCritical("Unable to access Universities endpoint");
+		// return TypedResults.BadRequest();
+
+		return await _client.GetFromJsonAsync<IEnumerable<UniversityResponse>>($"search?country={country}")
+			is IEnumerable<UniversityResponse> result
+			? TypedResults.Ok(result)
+			: TypedResults.BadRequest();
 	}
 
 	private async Task<Results<Ok<IEnumerable<UniversityResponse>>, BadRequest>> GetAsyncV5([FromBody] Country country)
