@@ -17,9 +17,9 @@ public class DefaultExceptionHandler : IExceptionHandler
 
 		await httpContext.Response.WriteAsJsonAsync(new ProblemDetails
 		{
-			Status = (int)HttpStatusCode.InternalServerError,
 			Type = exception.GetType().Name,
 			Title = "An unexpected error ocurred",
+			Status = (int)HttpStatusCode.InternalServerError,
 			Detail = exception.Message,
 			Instance = $"{httpContext.Request.Method} {httpContext.Request.Path}"
 		});

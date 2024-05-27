@@ -43,7 +43,7 @@ builder.Services
 	.AddCheck<UniversityHealthCheck>("UniversityEndpointHealth")
 	.AddSqlServer(builder.Configuration.GetConnectionString("Default")!);
 
-// Create Health check UI - dashboard
+// Create Health check UI - dashboard - /healthchecks-ui
 builder.Services.AddHealthChecksUI().AddInMemoryStorage();
 
 // Register CORS to enable cross domain access
@@ -112,6 +112,7 @@ if (app.Environment.IsDevelopment())
 
 // Initialize Global exception handler
 // app.UseMiddleware<GlobalExceptionHandling>();
+app.UseExceptionHandler(options => {});
 
 // Enable CORS in middleware
 //app.UseCors("blazorApp");
@@ -141,10 +142,10 @@ ILoggerFactory _loggerFactory = LoggerFactory.Create(builder =>
 	builder.AddDebug();
 });
 
-app.MapGet("/exception", () =>
+app.MapGet("/exception", ([FromQuery] string? message) =>
 {
-	throw new Exception("There was an exception...");
-});
+	ArgumentNullException.ThrowIfNull(message, "Expecting a message but received null.");
+}).WithTags("Exception");
 
 // Register my basic endpoints
 new BasicEndpoints().ConfigureBasicEndpoints(app);

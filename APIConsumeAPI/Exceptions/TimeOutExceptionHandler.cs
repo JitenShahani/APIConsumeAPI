@@ -21,9 +21,9 @@ public class TimeOutExceptionHandler : IExceptionHandler
 
 			await httpContext.Response.WriteAsJsonAsync(new ProblemDetails
 			{
-				Status = (int)HttpStatusCode.RequestTimeout,
 				Type = exception.GetType().Name,
 				Title = "A timeout occurred",
+				Status = (int)HttpStatusCode.RequestTimeout,
 				Detail = exception.Message,
 				Instance = $"{httpContext.Request.Method} {httpContext.Request.Path}"
 			});
