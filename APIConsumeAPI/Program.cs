@@ -112,7 +112,7 @@ if (app.Environment.IsDevelopment())
 
 // Initialize Global exception handler
 // app.UseMiddleware<GlobalExceptionHandling>();
-app.UseExceptionHandler(options => {});
+app.UseExceptionHandler();
 
 // Enable CORS in middleware
 //app.UseCors("blazorApp");
