@@ -34,6 +34,7 @@ builder.Services.AddSwaggerGen(options =>
 // builder.Services.AddTransient<GlobalExceptionHandling>();
 builder.Services.AddExceptionHandler<DefaultExceptionHandler>();
 builder.Services.AddExceptionHandler<TimeOutExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 // Basic health check + Ping Joke & University Endpoints
 // Install AspNetCore.HealthChecks.SqlServer, to health check your database
