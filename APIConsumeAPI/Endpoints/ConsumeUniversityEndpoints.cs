@@ -129,7 +129,13 @@ public class ConsumeUniversityEndpoints
 		return await _client.GetFromJsonAsync<IEnumerable<UniversityResponse>>($"search?country={country}")
 			is IEnumerable<UniversityResponse> result
 			? TypedResults.Ok(result)
-			: TypedResults.BadRequest();
+			: HandelBadRequest("Unable to access Universities endpoint");
+	}
+
+	private BadRequest HandelBadRequest(string message)
+	{
+		_logger.LogCritical(message);
+		return TypedResults.BadRequest();
 	}
 
 	private async Task<Results<Ok<IEnumerable<UniversityResponse>>, BadRequest>> GetAsyncV5([FromBody] Country country)
