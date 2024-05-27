@@ -134,7 +134,7 @@ public class ConsumeUniversityEndpoints
 
 	private BadRequest HandelBadRequest(string message)
 	{
-		_logger.LogCritical(message);
+		_logger.LogError(message);
 		return TypedResults.BadRequest();
 	}
 

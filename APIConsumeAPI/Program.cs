@@ -141,6 +141,11 @@ ILoggerFactory _loggerFactory = LoggerFactory.Create(builder =>
 	builder.AddDebug();
 });
 
+app.MapGet("/exception", () =>
+{
+	throw new Exception("There was an exception...");
+});
+
 // Register my basic endpoints
 new BasicEndpoints().ConfigureBasicEndpoints(app);
 

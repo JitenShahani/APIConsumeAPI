@@ -29,6 +29,7 @@ public class TimeOutExceptionHandler : IExceptionHandler
 			});
 			return true;
 		}
+
 		return false;
 	}
 }
