@@ -31,7 +31,9 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 // Global exception handling
-builder.Services.AddTransient<GlobalExceptionHandling>();
+// builder.Services.AddTransient<GlobalExceptionHandling>();
+builder.Services.AddExceptionHandler<DefaultExceptionHandler>();
+builder.Services.AddExceptionHandler<TimeOutExceptionHandler>();
 
 // Basic health check + Ping Joke & University Endpoints
 // Install AspNetCore.HealthChecks.SqlServer, to health check your database
@@ -109,7 +111,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // Initialize Global exception handler
-app.UseMiddleware<GlobalExceptionHandling>();
+// app.UseMiddleware<GlobalExceptionHandling>();
 
 // Enable CORS in middleware
 //app.UseCors("blazorApp");
